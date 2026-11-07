@@ -8,6 +8,8 @@ export type Trail = {
   imageAlt: string;
   distanceMiles: number;
   elevationGainFeet: number;
+  latitude?: number;
+  longitude?: number;
   difficulty: "Easy" | "Moderate" | "Hard" | "Strenuous";
   duration: string;
   safetyScore: number;
