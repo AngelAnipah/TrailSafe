@@ -22,7 +22,7 @@ export default function TrailDetailPage({ params }: { params: TrailParams }) {
       <Navbar />
       <main>
         <div className="mx-auto max-w-7xl px-5 pt-7 sm:px-8 lg:px-10">
-          <Link href="/" className="inline-flex items-center gap-2 rounded-lg px-1 py-2 text-sm font-bold text-[#31604d] transition hover:text-[#174a39] focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#73a98c]">
+          <Link href="/#trails" className="inline-flex items-center gap-2 rounded-lg px-1 py-2 text-sm font-bold text-[#31604d] transition hover:text-[#174a39] focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#73a98c]">
             <span aria-hidden="true">←</span> Back to Trails
           </Link>
         </div>
