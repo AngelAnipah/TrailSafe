@@ -56,7 +56,13 @@ export async function getAvalancheConditions(trail: Trail, options: AvalancheOpt
   } catch {
     return unavailable(trail, "Utah Avalanche Center forecast could not be retrieved.", now);
   }
-  if (!response.ok) return unavailable(trail, `Utah Avalanche Center returned ${response.status}.`, now);
+  if (!response.ok) {
+    // Keep provider status server-side only; it is useful for operations but not a safety instruction.
+    console.warn("Utah Avalanche Center forecast request failed", { region: trail.avalancheRegion, status: response.status });
+    return unavailable(trail, response.status === 401
+      ? "Avalanche advisory unavailable — authorized data access required."
+      : "Avalanche advisory is temporarily unavailable. Do not assume low risk.", now);
+  }
   let payload: unknown;
   try { payload = await response.json(); } catch { return unavailable(trail, "Utah Avalanche Center returned an invalid forecast payload.", now); }
   const roses = findValues(payload, ["overall_danger_rose"]);

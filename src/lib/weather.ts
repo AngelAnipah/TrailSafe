@@ -3,6 +3,11 @@ import type { SafetyWarning } from "./scoring";
 
 export const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast";
 export const TRAILSAFE_TIME_ZONE = "America/Denver";
+const FEET_TO_METERS = 0.3048;
+
+export function feetToMeters(feet: number): number {
+  return feet * FEET_TO_METERS;
+}
 
 export type WeatherConditions = {
   time: number;
@@ -56,7 +61,10 @@ function toWeatherConditions(source: Record<string, unknown>, index?: number): W
     time: read("time") * 1000, temperatureF: read("temperature_2m"), apparentTemperatureF: read("apparent_temperature"),
     windSpeedMph: read("wind_speed_10m"), windGustsMph: read("wind_gusts_10m"),
     precipitationProbability: read("precipitation_probability"), precipitationInches: read("precipitation"),
-    weatherCode: read("weather_code"), visibilityMeters: read("visibility"),
+    weatherCode: read("weather_code"),
+    // Open-Meteo returns visibility in feet when imperial units are requested.
+    // Convert at the provider boundary so all downstream thresholds remain metres.
+    visibilityMeters: feetToMeters(read("visibility")),
   };
 }
 

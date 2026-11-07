@@ -24,6 +24,8 @@ export type TrailSafetyAssessmentOptions = {
 };
 
 export type TrailSafetyAssessment = {
+  /** Live provider data and separately activated screenshot fixtures never share a mode. */
+  dataMode: "live" | "demo";
   trailId: string;
   plannedStartTime: string;
   generatedAt: string;
@@ -48,7 +50,7 @@ function checkWarnings(trail: Trail, checks: RequiredConditionCheck[], now: Date
   for (const required of trail.requiredConditionChecks ?? []) {
     const check = checks.find((entry) => entry.type === required);
     if (!check || check.status === "unavailable" || !isFresh(check.verifiedAt, now, 60)) {
-      unavailable.push(`${required === "flash-flood" ? "Flash-flood" : "River-condition"} check is missing, unavailable, or stale.`);
+      unavailable.push(`Current ${required === "flash-flood" ? "flash-flood" : "river-condition"} check is required before this assessment can be issued.`);
       continue;
     }
     if (check.status === "critical") warnings.push({ code: required, message: check.message ?? `${required} check reports critical conditions.`, severity: "critical", source: check.source, verifiedAt: check.verifiedAt });
@@ -89,7 +91,7 @@ export async function getTrailSafetyAssessment(trail: Trail, plannedStartTime: s
     warnings,
   });
   return {
-    trailId: trail.id, plannedStartTime: planned.toISOString(), generatedAt: now.toISOString(),
+    dataMode: "live", trailId: trail.id, plannedStartTime: planned.toISOString(), generatedAt: now.toISOString(),
     category: unavailableReasons.length ? "Unavailable" : scoring.category,
     score: unavailableReasons.length ? null : scoring.score,
     scoring: unavailableReasons.length ? { ...scoring, category: "Unavailable", score: null, reasons: [...unavailableReasons, ...scoring.reasons] } : scoring,
