@@ -69,7 +69,7 @@ async function TrailDetailContent({ params }: { params: TrailParams }) {
               <div><SafetyBadge category={assessment.category} /><p className="mt-2 text-sm font-semibold text-[#294a3e]">{assessment.category === "Unavailable" ? "Live assessment unavailable" : `${assessment.category} recommendation`}</p><p className="text-xs text-[#71867c]">Updated {new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/Denver", timeZoneName: "short" }).format(new Date(assessment.generatedAt))}</p></div>
             </div>
             <p className="mt-6 border-l-4 border-[#a8cfae] pl-4 text-sm leading-6 text-[#49675a]">{assessment.score === null ? assessment.unavailableReasons[0] ?? "Live safety information is unavailable." : assessment.scoring.reasons[0] ?? "Live safety data is available for this trail."}</p>
-            <div className="mt-7"><button type="button" disabled title="Check-in integration pending" className="w-full cursor-not-allowed rounded-xl bg-[#8aaa9a] px-5 py-3.5 text-sm font-bold text-white opacity-80 sm:w-auto">Start Hike</button><p className="mt-2 text-xs text-[#71867c]">Check-in integration pending — this button will connect to your team&apos;s check-in flow.</p></div>
+            <div className="mt-7"><Link href={`/trails/${trail.id}/hike`} className="inline-flex w-full justify-center rounded-xl bg-[#1e5a45] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#174a39] focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#73a98c] sm:w-auto">Start Hike</Link><p className="mt-2 text-xs text-[#71867c]">Set a return time and choose a demo emergency contact check-in.</p></div>
           </div>
         </div>
       </section>
