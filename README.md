@@ -1,53 +1,36 @@
-# TrailSafe UT
-
-> Before you hike in Utah, know if it’s safe today - and make sure someone knows you’re out there.
-
-TrailSafe UT helps hikers make safer, explainable trail decisions using live weather, avalanche conditions, daylight, and trail difficulty. It also provides a timed check-in flow that can simulate an emergency alert if a hiker does not return on time.
-
-## Features
-
-- Browse 8 curated Utah trails with a live, explainable Safety Score
-- Filter trails by **Go**, **Caution**, and **Avoid**
-- View weather now and over the next six hours
-- See avalanche danger by Utah region
-- Compare estimated finish time with sunset
-- Get a packing checklist tailored to today’s conditions
-- Start a hike, set an expected return time, and choose an emergency contact
-- Simulate a missed check-in alert with last trail and location
-
-## Safety Score
-
-| Factor | Weight |
-|---|---:|
-| Weather | 40% |
-| Avalanche danger | 30% |
-| Daylight | 20% |
-| Trail difficulty | 10% |
-
-- **85–100:** Go
-- **60–84:** Caution
-- **Below 60:** Avoid
-
-## Tech Stack
-
-- Next.js
-- Tailwind CSS
-- Leaflet + OpenStreetMap
-- Open-Meteo API
-- localStorage
-- Vercel
-
-## Team Roles
-
-- **Frontend:** Trail picker and detail screens
-- **Data / Scoring:** Open-Meteo integration, safety formula, trail data
-- **Safety Flow:** Hike timer, check-in, alert simulation
-- **Pitch / Demo:** Slides and 2-minute judge demo
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
+First, run the development server:
+
 ```bash
-git clone https://github.com/YOUR-USERNAME/trailsafe-ut.git
-cd trailsafe-ut
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
