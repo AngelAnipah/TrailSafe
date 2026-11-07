@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { LiveTrailPicker, TrailPickerLoading } from "@/components/live-trail-picker";
 import { Navbar } from "@/components/navbar";
-import { TrailPicker } from "@/components/trail-picker";
 
 export default function Home() {
   return (
@@ -17,12 +18,14 @@ export default function Home() {
               <Link href="/#trails" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#1e5a45] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#1e5a45]/20 transition hover:bg-[#174a39] focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#73a98c]">Explore trail conditions <span aria-hidden="true">→</span></Link>
             </div>
             <div className="relative mx-auto w-full max-w-md">
-              <div className="rounded-[2rem] border border-white/70 bg-white/70 p-5 shadow-2xl shadow-[#315c45]/10 backdrop-blur-sm"><div className="flex items-center justify-between"><p className="font-bold text-[#1b4436]">Your safer trail day</p><span className="rounded-full bg-[#e6f4e8] px-2.5 py-1 text-xs font-bold text-[#287149]">Live-ready</span></div><div className="mt-5 rounded-2xl bg-[#1d5b44] p-5 text-white"><p className="text-sm text-white/70">Trail conditions at a glance</p><div className="mt-4 flex items-end justify-between"><p className="text-4xl font-extrabold">8</p><p className="text-right text-sm leading-5 text-white/80">Utah trails<br />to explore today</p></div><div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/20"><div className="h-full w-[72%] rounded-full bg-[#a7d790]" /></div></div><div className="mt-5 grid grid-cols-3 gap-3 text-center"><div><p className="text-lg font-bold text-[#1e5a45]">3</p><p className="text-[11px] font-medium text-[#70877b]">Go</p></div><div><p className="text-lg font-bold text-[#b17d1e]">4</p><p className="text-[11px] font-medium text-[#70877b]">Caution</p></div><div><p className="text-lg font-bold text-[#b65047]">1</p><p className="text-[11px] font-medium text-[#70877b]">Avoid</p></div></div></div>
+              <div className="rounded-[2rem] border border-white/70 bg-white/70 p-5 shadow-2xl shadow-[#315c45]/10 backdrop-blur-sm"><div className="flex items-center justify-between"><p className="font-bold text-[#1b4436]">Your safer trail day</p><span className="rounded-full bg-[#e6f4e8] px-2.5 py-1 text-xs font-bold text-[#287149]">Live-ready</span></div><div className="mt-5 rounded-2xl bg-[#1d5b44] p-5 text-white"><p className="text-sm text-white/70">Trail conditions at a glance</p><div className="mt-4 flex items-end justify-between"><p className="text-4xl font-extrabold">8</p><p className="text-right text-sm leading-5 text-white/80">Utah trails<br />with live assessment</p></div><div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/20"><div className="h-full w-[72%] rounded-full bg-[#a7d790]" /></div></div><div className="mt-5 grid grid-cols-3 gap-3 text-center"><div><p className="text-lg font-bold text-[#1e5a45]">Live</p><p className="text-[11px] font-medium text-[#70877b]">Weather</p></div><div><p className="text-lg font-bold text-[#b17d1e]">Live</p><p className="text-[11px] font-medium text-[#70877b]">Avalanche</p></div><div><p className="text-lg font-bold text-[#b65047]">Live</p><p className="text-[11px] font-medium text-[#70877b]">Daylight</p></div></div></div>
               <svg viewBox="0 0 200 80" className="absolute -bottom-12 -right-16 -z-10 w-56 fill-[#c2d9c0] opacity-70" aria-hidden="true"><path d="M0 80 45 25l24 29L108 0l39 55 20-22 33 47H0Z" /></svg>
             </div>
           </div>
         </section>
-        <TrailPicker />
+        <Suspense fallback={<TrailPickerLoading />}>
+          <LiveTrailPicker />
+        </Suspense>
         <section id="how-it-works" className="scroll-mt-24 border-y border-[#dfe6dd] bg-white/55"><div className="mx-auto grid max-w-7xl gap-6 px-5 py-12 sm:grid-cols-3 sm:px-8 lg:px-10"><p className="text-sm leading-6 text-[#60776d]"><span className="mb-2 block font-bold text-[#1f513f]">01 · Check conditions</span>See weather, trail context, and risk signals in one place.</p><p className="text-sm leading-6 text-[#60776d]"><span className="mb-2 block font-bold text-[#1f513f]">02 · Choose confidently</span>Make a plan with clear, easy-to-read safety guidance.</p><p className="text-sm leading-6 text-[#60776d]"><span className="mb-2 block font-bold text-[#1f513f]">03 · Get outside</span>Spend less time guessing and more time enjoying Utah.</p></div></section>
       </main>
     </div>

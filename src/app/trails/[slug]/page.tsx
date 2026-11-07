@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { Navbar } from "@/components/navbar";
 import { PackingChecklist } from "@/components/packing-checklist";
@@ -8,7 +9,8 @@ import { SafetyBadge } from "@/components/safety-badge";
 import { SafetyBreakdown } from "@/components/safety-breakdown";
 import { WeatherOutlook } from "@/components/weather-outlook";
 import { trails } from "@/data/trails";
-import { getSafetyStatus } from "@/types/trail";
+import { createUnavailableAssessment } from "@/lib/assessment-fallback";
+import { getTrailSafetyAssessment, type TrailSafetyAssessment } from "@/lib/safety-assessment";
 
 type TrailParams = Promise<{ slug: string }>;
 
@@ -40,8 +42,14 @@ async function TrailDetailContent({ params }: { params: TrailParams }) {
 
   if (!trail) notFound();
 
-  const status = getSafetyStatus(trail.safetyScore);
-  const longHike = trail.duration.startsWith("8") || trail.duration.startsWith("5");
+  await connection();
+  const requestedAt = new Date().toISOString();
+  let assessment: TrailSafetyAssessment;
+  try {
+    assessment = await getTrailSafetyAssessment(trail, requestedAt);
+  } catch {
+    assessment = createUnavailableAssessment(trail, "A live safety assessment could not be generated.", requestedAt);
+  }
 
   return (
     <>
@@ -55,12 +63,12 @@ async function TrailDetailContent({ params }: { params: TrailParams }) {
           <div className="flex flex-col justify-center p-6 sm:p-10">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a4613c]">Trail condition overview</p>
             <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight text-[#173d32] sm:text-5xl">{trail.name}</h1>
-            <p className="mt-3 text-[#60786d]">{trail.location} · Safety information is currently demo data.</p>
+            <p className="mt-3 text-[#60786d]">{trail.location} · Live provider data is informational, not a guarantee of safety.</p>
             <div className="mt-7 flex items-center gap-4">
-              <div className="grid h-24 w-24 place-items-center rounded-3xl bg-[#e7f3e8] text-center"><span className="text-4xl font-extrabold leading-none text-[#1d5b44]">{trail.safetyScore}</span><span className="text-[10px] font-bold uppercase tracking-wider text-[#537b68]">of 100</span></div>
-              <div><SafetyBadge score={trail.safetyScore} /><p className="mt-2 text-sm font-semibold text-[#294a3e]">{status} recommendation</p><p className="text-xs text-[#71867c]">Sample safety score</p></div>
+              <div className="grid h-24 w-24 place-items-center rounded-3xl bg-[#e7f3e8] text-center"><span className="text-4xl font-extrabold leading-none text-[#1d5b44]">{assessment.score ?? "—"}</span><span className="text-[10px] font-bold uppercase tracking-wider text-[#537b68]">{assessment.score === null ? "unavailable" : "of 100"}</span></div>
+              <div><SafetyBadge category={assessment.category} /><p className="mt-2 text-sm font-semibold text-[#294a3e]">{assessment.category === "Unavailable" ? "Live assessment unavailable" : `${assessment.category} recommendation`}</p><p className="text-xs text-[#71867c]">Updated {new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/Denver", timeZoneName: "short" }).format(new Date(assessment.generatedAt))}</p></div>
             </div>
-            <p className="mt-6 border-l-4 border-[#a8cfae] pl-4 text-sm leading-6 text-[#49675a]">{trail.safetyRationale}</p>
+            <p className="mt-6 border-l-4 border-[#a8cfae] pl-4 text-sm leading-6 text-[#49675a]">{assessment.score === null ? assessment.unavailableReasons[0] ?? "Live safety information is unavailable." : assessment.scoring.reasons[0] ?? "Live safety data is available for this trail."}</p>
             <div className="mt-7"><button type="button" disabled title="Check-in integration pending" className="w-full cursor-not-allowed rounded-xl bg-[#8aaa9a] px-5 py-3.5 text-sm font-bold text-white opacity-80 sm:w-auto">Start Hike</button><p className="mt-2 text-xs text-[#71867c]">Check-in integration pending — this button will connect to your team&apos;s check-in flow.</p></div>
           </div>
         </div>
@@ -68,13 +76,19 @@ async function TrailDetailContent({ params }: { params: TrailParams }) {
       <section className="mx-auto grid max-w-7xl gap-6 px-5 pb-16 sm:px-8 lg:grid-cols-[1.35fr_.65fr] lg:px-10">
         <div className="space-y-6">
           <section className="rounded-3xl border border-[#dfe7dd] bg-white p-5 shadow-sm sm:p-6"><p className="text-xs font-bold uppercase tracking-[0.16em] text-[#a4613c]">Trail details</p><h2 className="mt-1 text-2xl font-bold tracking-tight text-[#173d32]">Plan your route</h2><dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4"><DetailFact label="Distance" value={`${trail.distanceMiles} mi`} /><DetailFact label="Elevation" value={`${trail.elevationGainFeet.toLocaleString()} ft`} /><DetailFact label="Difficulty" value={trail.difficulty} /><DetailFact label="Duration" value={trail.duration} /></dl></section>
-          <SafetyBreakdown />
-          <WeatherOutlook longHike={longHike} />
+          <SafetyBreakdown assessment={assessment} />
+          <WeatherOutlook assessment={assessment} />
+          <AvalancheSummary assessment={assessment} />
         </div>
         <aside><PackingChecklist /></aside>
       </section>
     </>
   );
+}
+
+function AvalancheSummary({ assessment }: { assessment: TrailSafetyAssessment }) {
+  const avalanche = assessment.avalanche;
+  return <section className="rounded-3xl border border-[#dfe7dd] bg-white p-5 shadow-sm sm:p-6"><p className="text-xs font-bold uppercase tracking-[0.16em] text-[#a4613c]">Live avalanche data</p><h2 className="mt-1 text-2xl font-bold tracking-tight text-[#173d32]">Avalanche conditions</h2>{!avalanche ? <p className="mt-4 text-sm text-slate-600">Avalanche conditions are unavailable. Do not assume low risk.</p> : !avalanche.applicable ? <p className="mt-4 text-sm text-[#587166]">Avalanche conditions are not applicable for this route. The assessment reweights the remaining safety factors.</p> : avalanche.available ? <div className="mt-4"><p className="text-lg font-bold text-[#24483a]">{avalanche.danger} danger</p><p className="mt-1 text-sm text-[#587166]">Issued {avalanche.issuedAt ? new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Denver" }).format(new Date(avalanche.issuedAt)) : "—"}</p>{avalanche.sourceUrl && <a className="mt-3 inline-flex text-sm font-bold text-[#1e5a45] underline underline-offset-4" href={avalanche.sourceUrl} target="_blank" rel="noreferrer">View Utah Avalanche Center forecast</a>}</div> : <p className="mt-4 text-sm text-slate-600">{avalanche.reason ?? "Avalanche conditions are unavailable. Do not assume low risk."}</p>}</section>;
 }
 
 function DetailFact({ label, value }: { label: string; value: string }) {
