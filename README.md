@@ -144,7 +144,18 @@ The application was delivered as a collaborative team effort across the experien
 - Weather data: [Open-Meteo](https://open-meteo.com/)
 - Avalanche advisories: [Utah Avalanche Center](https://utahavalanchecenter.org/)
 - Maps: [OpenStreetMap](https://www.openstreetmap.org/)
-- Trail imagery: [Unsplash](https://unsplash.com/) and [Wikimedia Commons](https://commons.wikimedia.org/)
+- Trail imagery: verified [Wikimedia Commons](https://commons.wikimedia.org/) photographs (source and license links below)
 - Trailhead-coordinate references are recorded with the curated trail data.
 
-Wikimedia Commons images retain their individual source links in the application. Review the applicable source and license terms before redistributing imagery.
+All trail cards, trail detail pages, hike screens, scenic backgrounds, and simulated-alert previews use the same verified local image per trail. The JPEG derivatives live in `public/trails/` (1,280px wide, except the Narrows at 1,024px); attribution links appear in the hike and alert interfaces.
+
+| Trail | Photographer | License | Source |
+| --- | --- | --- | --- |
+| Donut Falls | Nate Lowe / U.S. Forest Service | Public domain (U.S. federal government work) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20170116-FS-UWC_NF-NL-Hike_to_donut_falls_(23807302398).jpg) |
+| Lake Blanche | Z3lvs | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sundial_Peak_and_snowy_ridges_above_Lake_Blanche,_Twin_Peaks_Wilderness,_Utah.jpg) |
+| Mount Timpanogos | Brian Smith | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mount_Timpanogos_from_Mount_Timpanogos_Trail_approaching_the_saddle.jpg) |
+| Angels Landing | Tobias Alt | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Angels_Landing.jpg) |
+| The Narrows | Jon Sullivan | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Zion_Narrows.jpg) |
+| Frary Peak | Z3lvs | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Antelope_Island_State_Park_-_Frary_Peak_ridge_01.jpg) |
+| Delicate Arch | Jonathan Zander (Digon3) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Delicate_Arch_in_Arches_National_Park_3.jpg) |
+| Cecret Lake | Jeffrey McGrath | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cecret_Lake_Panorama_Albion_Basin_Alta_Utah_July_2009.jpg) |

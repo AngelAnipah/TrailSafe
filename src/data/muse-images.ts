@@ -2,50 +2,76 @@ type MuseTrailImage = {
   src: string;
   alt: string;
   sourceUrl: string;
+  photographer: string;
+  license: string;
+  licenseUrl: string;
 };
 
-// Original, trail-specific image references supplied with the Muse handoff.
-// Each source link leads to the Wikimedia Commons file page, including author
-// and current reuse terms. These stay separate from the canonical trail data.
+// Verified trail-specific Wikimedia Commons image records. The local assets
+// were downloaded from the linked Commons source pages and keep their credit.
 export const museTrailImages: Record<string, MuseTrailImage> = {
   "donut-falls": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/20170116-FS-UWC_NF-NL-Hike_to_donut_falls_%2823807302398%29.jpg/1280px-20170116-FS-UWC_NF-NL-Hike_to_donut_falls_%2823807302398%29.jpg",
+    src: "/trails/donut-falls.jpg",
     alt: "Hike to Donut Falls in Big Cottonwood Canyon, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:20170116-FS-UWC_NF-NL-Hike_to_donut_falls_(23807302398).jpg",
+    photographer: "Nate Lowe / U.S. Forest Service",
+    license: "Public domain (U.S. federal government work)",
+    licenseUrl: "https://www.usa.gov/government-copyright",
   },
   "lake-blanche": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Sundial_Peak_and_snowy_ridges_above_Lake_Blanche%2C_Twin_Peaks_Wilderness%2C_Utah.jpg/1280px-Sundial_Peak_and_snowy_ridges_above_Lake_Blanche%2C_Twin_Peaks_Wilderness%2C_Utah.jpg",
+    src: "/trails/lake-blanche.jpg",
     alt: "Sundial Peak and snowy ridges above Lake Blanche, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Sundial_Peak_and_snowy_ridges_above_Lake_Blanche,_Twin_Peaks_Wilderness,_Utah.jpg",
+    photographer: "Z3lvs",
+    license: "CC0 1.0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
   },
   "mount-timpanogos": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Mount_Timpanogos_from_Mount_Timpanogos_Trail_approaching_the_saddle.jpg/1280px-Mount_Timpanogos_from_Mount_Timpanogos_Trail_approaching_the_saddle.jpg",
+    src: "/trails/mount-timpanogos.jpg",
     alt: "Mount Timpanogos from the trail approaching the saddle",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Mount_Timpanogos_from_Mount_Timpanogos_Trail_approaching_the_saddle.jpg",
+    photographer: "Brian Smith",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
   },
   "angels-landing": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Angels_Landing.jpg/1280px-Angels_Landing.jpg",
+    src: "/trails/angels-landing.jpg",
     alt: "Angels Landing in Zion National Park, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Angels_Landing.jpg",
+    photographer: "Tobias Alt",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
   },
   "the-narrows": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Zion_Narrows.jpg",
+    src: "/trails/the-narrows.jpg",
     alt: "The Narrows canyon in Zion National Park, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Zion_Narrows.jpg",
+    photographer: "Jon Sullivan",
+    license: "Public domain",
+    licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/",
   },
   "frary-peak": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Antelope_Island_State_Park_-_Frary_Peak_ridge_01.jpg/1280px-Antelope_Island_State_Park_-_Frary_Peak_ridge_01.jpg",
+    src: "/trails/frary-peak.jpg",
     alt: "Frary Peak ridge on Antelope Island State Park, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Antelope_Island_State_Park_-_Frary_Peak_ridge_01.jpg",
+    photographer: "Z3lvs",
+    license: "CC0 1.0",
+    licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
   },
   "delicate-arch": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Delicate_Arch_in_Arches_National_Park_3.jpg/1280px-Delicate_Arch_in_Arches_National_Park_3.jpg",
+    src: "/trails/delicate-arch.jpg",
     alt: "Delicate Arch in Arches National Park, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Delicate_Arch_in_Arches_National_Park_3.jpg",
+    photographer: "Jonathan Zander (Digon3)",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
   },
   "cecret-lake": {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Cecret_Lake_Panorama_Albion_Basin_Alta_Utah_July_2009.jpg/1280px-Cecret_Lake_Panorama_Albion_Basin_Alta_Utah_July_2009.jpg",
+    src: "/trails/cecret-lake.jpg",
     alt: "Cecret Lake panorama in Albion Basin, Alta, Utah",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Cecret_Lake_Panorama_Albion_Basin_Alta_Utah_July_2009.jpg",
+    photographer: "Jeffrey McGrath",
+    license: "CC BY-SA 3.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
   },
 };
